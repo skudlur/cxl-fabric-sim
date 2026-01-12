@@ -9,7 +9,8 @@ Implements common CXL fabric topologies:
 
 from typing import List, Dict, Tuple
 import sys
-sys.path.insert(0, '/home/claude/cxl-fabric-sim/src')
+import os
+sys.path.insert(0, os.path.join(os.path.dirname(__file__), '..', 'src'))
 
 from core import CXLSwitch, Host
 

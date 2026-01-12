@@ -12,8 +12,8 @@ import random
 from typing import List, Tuple
 from dataclasses import dataclass
 import sys
-sys.path.insert(0, '/home/claude/cxl-fabric-sim/src')
-
+import os
+sys.path.insert(0, os.path.join(os.path.dirname(__file__), '..', 'src'))
 
 @dataclass
 class MemoryRequest:
