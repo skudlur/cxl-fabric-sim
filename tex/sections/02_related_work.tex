@@ -1,0 +1,42 @@
+% TODO: Related Work
+%
+% Structure into three subsections:
+%  1. CXL simulation frameworks (CXLMemSim, CXL-DMSim, ESF) — note ESF
+%     already shows adaptive-vs-oblivious routing helps under a
+%     noisy-neighbor scenario; differentiate this paper as mechanism-level
+%     characterization of the saturation threshold plus a lightweight,
+%     Python-based rapid-prototyping tool.
+%  2. Datacenter congestion-aware load balancing (CONGA, Hedera,
+%     queue-occupancy ECMP variants) — establish occupancy-weighted ECMP
+%     lineage; note it hasn't been evaluated specifically in a CXL fabric
+%     context.
+%  3. CXL multi-tenancy/fairness (Equilibria) — note this operates at the
+%     OS/memory-tiering layer, complementary to (not overlapping with)
+%     this paper's fabric-routing-layer focus if H2 is included.
+
+\section{Related Work}
+\label{sec:related-work}
+
+\subsection{CXL Simulation Frameworks}
+TODO: discuss CXLMemSim~\cite{yang2023cxlmemsim}, CXL-DMSim
+\cite{wang2025cxldmsim}, and ESF~\cite{an2024esf}. Note that ESF already
+shows adaptive-vs-oblivious routing helps under a noisy-neighbor scenario;
+this paper differentiates itself via mechanism-level characterization of
+the saturation threshold and a lightweight, Python-based rapid-prototyping
+tool (TraceCXL).
+
+\subsection{Congestion-Aware Load Balancing}
+TODO: discuss CONGA~\cite{alizadeh2014conga} and
+Hedera~\cite{alfares2010hedera}, plus queue-occupancy-based ECMP
+variants~\cite{ye2018wecmp} (note: this is a P4/weighted-ECMP paper, not a
+paper specifically titled ``QALL''/``QLLB'' — see the
+\texttt{\% TODO: verify} comment above this entry in
+\texttt{references.bib} for what's still unconfirmed). Establish the
+occupancy-weighted ECMP lineage and note it has not previously been
+evaluated in a CXL fabric context.
+
+\subsection{CXL Multi-Tenancy and Fairness}
+TODO: discuss Equilibria~\cite{zhao2026equilibria}. Note this operates at
+the OS/memory-tiering layer, complementary to (not overlapping with) this
+paper's fabric-routing-layer focus, if H2 (cross-tenant fairness, see
+experiment spec) is included in the final paper.

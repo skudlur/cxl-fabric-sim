@@ -1,0 +1,32 @@
+% TODO: Methodology
+%
+% Describe TraceCXL (cite the repo/tool), the spine-leaf topology used,
+% the static ECMP baseline, and the occupancy-weighted ECMP design
+% (mechanism, tie-breaking/hysteresis parameters). Pull actual parameter
+% values from tracecxl_experiment_spec.md / RECON.md once finalized — do
+% NOT invent placeholder numbers here, leave as TODO instead.
+
+\section{Methodology}
+\label{sec:methodology}
+
+\subsection{TraceCXL}
+TODO: describe TraceCXL, the discrete-event simulator used for this study
+(cite the repository/tool).
+
+\subsection{Topology}
+TODO: describe the fixed spine-leaf topology used for H1 (exact spine/leaf
+counts TBD — see \texttt{tracecxl\_experiment\_spec.md} Section 3 and
+\texttt{RECON.md} once produced; do not invent numbers here).
+
+\subsection{Baseline: Static ECMP}
+TODO: describe the existing static ECMP implementation in
+\texttt{src/routing/} (hash function, what it hashes on).
+
+\subsection{Occupancy-Weighted ECMP}
+TODO: describe the occupancy-weighted ECMP mechanism — next-hop selection
+biased toward lowest current queue/buffer occupancy, plus the
+hysteresis/tie-breaking rule used to avoid route flapping. Report the
+exact fixed hyperparameters used for the sweep once determined (per
+\texttt{tracecxl\_experiment\_spec.md} Section 4 — these must be fixed
+before the sweep, not tuned per data point). TODO: pull exact parameter
+values once finalized.

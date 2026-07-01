@@ -13,3 +13,15 @@ __pycache__/
 .DS_Store
 
 cxl_fabric_sim.egg-info/
+
+# LaTeX build artifacts (tex/)
+*.aux
+*.bbl
+*.blg
+*.out
+*.synctex.gz
+*.bcf
+*.run.xml
+*.fls
+*.fdb_latexmk
+tex/main.pdf

@@ -1,0 +1,34 @@
+% TODO: Experimental Setup
+%
+% Table of experiment matrix (topology, policies, load sweep range,
+% seeds) — leave as a TODO table to be filled from
+% results/h1/aggregate.csv once the sweep completes. Same for workload
+% generator description.
+
+\section{Experimental Setup}
+\label{sec:experimental-setup}
+
+\subsection{Experiment Matrix}
+% TODO: fill in from tracecxl_experiment_spec.md Section 3 once the H1
+% sweep has run and results/h1/aggregate.csv exists. Values below are
+% placeholders describing the table shape only — not real data.
+\begin{table}[t]
+  \centering
+  \caption{TODO: experiment matrix (topology, policies, load sweep range, seeds).}
+  \label{tab:experiment-matrix}
+  \begin{tabular}{ll}
+    \toprule
+    Variable & Value \\
+    \midrule
+    Topology & TODO \\
+    Routing policy & TODO \\
+    Traffic pattern & TODO \\
+    Offered load range & TODO \\
+    Seeds per config & TODO \\
+    \bottomrule
+  \end{tabular}
+\end{table}
+
+\subsection{Workload Generator}
+TODO: describe the synthetic bursty (on/off, Poisson-arrivals-during-ON)
+traffic generator once finalized against \texttt{src/workload/}.

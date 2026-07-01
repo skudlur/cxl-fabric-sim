@@ -1,0 +1,59 @@
+% TraceCXL — DASIP 2027 workshop paper
+%
+% Template: Springer LNCS (llncs.cls / splncs04.bst).
+% llncs.cls and splncs04.bst are resolved from the system TeX Live
+% distribution (confirmed present via `kpsewhich llncs.cls`) rather than
+% vendored here — see tex/build.sh header comment for details. If you move
+% this to a machine without a LaTeX distribution that ships llncs, vendor
+% the two files into this directory and drop this comment.
+%
+% Page limit / format: DASIP 2027's own CFP is not published yet (as of
+% 2026-07-01). Using DASIP 2026's confirmed CFP as the best available
+% precedent: 12-page limit, single-column Springer LNCS format (which
+% matches LNCS's default anyway, so no class-level conflict either way).
+% Re-verify against the actual DASIP 2027 CFP once HiPEAC publishes it
+% (likely autumn 2026, based on the 2026 cycle's timeline).
+\documentclass{llncs}
+
+\usepackage[T1]{fontenc}
+\usepackage{graphicx}
+\usepackage{booktabs}
+\usepackage{amsmath}
+\usepackage{hyperref}
+
+\begin{document}
+
+\title{TODO: Paper Title}
+%
+\titlerunning{TODO: Short Title}
+%
+\author{Suhas Kudlur Viswanath}
+%
+\authorrunning{S. Kudlur Viswanath}
+%
+\institute{TODO: Affiliation}
+
+\maketitle
+
+\input{sections/00_abstract}
+
+\input{sections/01_introduction}
+
+\input{sections/02_related_work}
+
+\input{sections/03_background}
+
+\input{sections/04_methodology}
+
+\input{sections/05_experimental_setup}
+
+\input{sections/06_results}
+
+\input{sections/07_discussion}
+
+\input{sections/08_conclusion}
+
+\bibliographystyle{splncs04}
+\bibliography{references}
+
+\end{document}

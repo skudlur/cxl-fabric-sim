@@ -18,16 +18,16 @@ class Host:
     Models a compute host issuing CXL memory requests.
     """
     
-    def __init__(self, host_id: int, connected_switch: int):
+    def __init__(self, host_id: int, connected_switch: int, disable_rate_limit: bool = False):
         self.host_id = host_id
         self.connected_switch = connected_switch
         self.next_packet_id = 0
-        
+
         # Statistics
         self.packets_sent = 0
         self.packets_received = 0
         self.outstanding_requests = {}  # packet_id -> packet
-        self.rate_controller = AdaptiveRateController()
+        self.rate_controller = AdaptiveRateController(enabled=not disable_rate_limit)
         
         # Credit-Based Flow Control state
         self.num_vcs = 8
@@ -213,31 +213,38 @@ class TrafficGenerator:
                   f"received={host.packets_received}, outstanding={host.num_outstanding}")
 
 class AdaptiveRateController:
-    """Rate controls host traffic based on ECN feedback"""
-    def __init__(self, initial_rate=100, window_duration_ns=1000.0):
-        self.current_rate = float(initial_rate)  # packets per time window
+    """Rate controls host traffic based on ECN feedback.
+
+    Set `enabled=False` for open-loop experiment sweeps where offered load
+    must be held at a fixed target regardless of congestion feedback.
+    """
+    def __init__(self, initial_rate=100, window_duration_ns=1000.0, enabled=True):
+        self.current_rate = float(initial_rate)
         self.ecn_count = 0
         self.total_sent = 0
         self.window_duration_ns = window_duration_ns
         self.window_start = 0.0
+        self.enabled = enabled
 
     def should_send(self, current_time: float) -> bool:
-        """Check if we can send based on rate limit"""
-        # Reset window if expired
+        """Check if we can send based on rate limit. Always True when disabled."""
+        if not self.enabled:
+            return True
+
         if current_time >= self.window_start + self.window_duration_ns:
             self.window_start = current_time
             self.total_sent = 0
-            
+
         if self.total_sent < self.current_rate:
             self.total_sent += 1
             return True
         return False
 
     def process_ecn_feedback(self, packet: CXLPacket):
+        if not self.enabled:
+            return
         if packet.ecn_marked:
             self.ecn_count += 1
-            # Multiplicative decrease (drop to 50%)
             self.current_rate = max(1.0, self.current_rate * 0.5)
         else:
-            # Additive increase (+1 packet per window)
             self.current_rate += 1.0

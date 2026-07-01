@@ -69,11 +69,12 @@ class SingleTierTopology(FabricTopology):
         Dev0   Dev1   Dev2   Dev3
     """
     
-    def __init__(self, num_hosts: int, num_devices: int, queue_depth: int = 32):
+    def __init__(self, num_hosts: int, num_devices: int, queue_depth: int = 32, disable_rate_limit: bool = False):
         super().__init__()
         self.num_hosts = num_hosts
         self.num_devices = num_devices
         self.queue_depth = queue_depth
+        self.disable_rate_limit = disable_rate_limit
     
     def build(self):
         """Construct single-tier topology"""
@@ -84,7 +85,7 @@ class SingleTierTopology(FabricTopology):
         
         # Create hosts (connected to ports 0 to num_hosts-1)
         for i in range(self.num_hosts):
-            host = Host(host_id=i, connected_switch=0)
+            host = Host(host_id=i, connected_switch=0, disable_rate_limit=self.disable_rate_limit)
             self.hosts.append(host)
             self.host_to_switch[i] = 0
         
@@ -131,12 +132,13 @@ class TwoTierTopology(FabricTopology):
     """
     
     def __init__(
-        self, 
+        self,
         num_spines: int = 2,
         num_leaves: int = 3,
         hosts_per_leaf: int = 2,
         devices_per_leaf: int = 2,
-        queue_depth: int = 32
+        queue_depth: int = 32,
+        disable_rate_limit: bool = False,
     ):
         super().__init__()
         self.num_spines = num_spines
@@ -144,6 +146,7 @@ class TwoTierTopology(FabricTopology):
         self.hosts_per_leaf = hosts_per_leaf
         self.devices_per_leaf = devices_per_leaf
         self.queue_depth = queue_depth
+        self.disable_rate_limit = disable_rate_limit
         
         # Track which leaves have hosts vs devices
         self.host_leaves = []
@@ -174,8 +177,8 @@ class TwoTierTopology(FabricTopology):
             )
             self.switches.append(leaf)
             
-            # First half of leaves get hosts, second half get devices
-            if i < max(1, self.num_leaves // 2):
+            # First half (ceiling) of leaves get hosts, remainder get devices
+            if i < (self.num_leaves + 1) // 2:
                 self.host_leaves.append(leaf_id)
             else:
                 self.device_leaves.append(leaf_id)
@@ -193,7 +196,7 @@ class TwoTierTopology(FabricTopology):
         host_id = 0
         for leaf_id in self.host_leaves:
             for i in range(self.hosts_per_leaf):
-                host = Host(host_id=host_id, connected_switch=leaf_id)
+                host = Host(host_id=host_id, connected_switch=leaf_id, disable_rate_limit=self.disable_rate_limit)
                 self.hosts.append(host)
                 self.host_to_switch[host_id] = leaf_id
                 host_id += 1
